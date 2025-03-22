@@ -11,10 +11,10 @@ from sklearn.preprocessing import StandardScaler
 from keras.models import Sequential
 from keras import regularizers
 
-d1 = pd.read_csv("Daily_data_of_Soil_Moisture_during_March_2024.csv")
-d2 = pd.read_csv("Daily_data_of_Soil_Moisture_during_April_2024.csv")
+data = pd.read_csv("2024_complete_dataset.csv")
+#d2 = pd.read_csv("Daily_data_of_Soil_Moisture_during_April_2024.csv")
 
-data = pd.concat([d1,d2],axis = 0)
+#data = pd.concat([d1,d2],axis = 0)
 
 data = data.dropna()
 print(len(data))
@@ -31,41 +31,45 @@ x_train = scaler.fit_transform(x_train)
 x_test = scaler.fit_transform(x_test)
 
 
-model = tf.keras.Sequential([tf.keras.layers.Dense(64, activation = 'relu',kernel_regularizer=regularizers.l1(0.00456)),
+model = tf.keras.Sequential([tf.keras.layers.Dense(128, activation = 'relu',kernel_regularizer=regularizers.l1(0.00456)),
                              tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(64, activation = 'relu'),
+                       tf.keras.layers.Dense(128, activation = 'relu'),
                        tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(64, activation = 'relu'),
+                       tf.keras.layers.Dense(128, activation = 'relu'),
                        tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(64, activation = 'relu'),
+                       tf.keras.layers.Dense(128, activation = 'relu'),
+                       tf.keras.layers.Dropout(0.04505),
+                       tf.keras.layers.Dense(128, activation = 'relu'),
                        tf.keras.layers.Dropout(0.04505),
                        tf.keras.layers.Dense(1)
 ])
 #0.000254
-opti = tf.keras.optimizers.Adam(learning_rate = 0.000256)
+opti = tf.keras.optimizers.Adam(learning_rate = 0.000254)
 
 model.compile(optimizer = opti,loss = "mean_squared_error")
 
 es = 200
 
-history = model.fit(x_train, y_train, validation_split = 0.2, epochs = es, batch_size = 64)
+history = model.fit(x_train, y_train, validation_split = 0.2, epochs = es, batch_size = 1024)
 
 model.save
 test_loss = model.evaluate(x_test, y_test)
 
 min_loss = min(history.history['loss'])
 print(f"minimum loss = {min_loss}")
-accuracy = (1-min_loss)*100
+test_accuracy = 100-test_loss
+print(f"test accuracy = {test_accuracy}%")
 
 print(f'test loss :{test_loss}')
 
 predictions = model.predict(x_test)
 
-model.save("satatalitte_data_soil_moisture.h5")
-print("model saved")
+#model.save("satatalitte_data_soil_moisture.h5")
+#print("model saved")
 
 #plotting actual v/s predicted values
 plt.scatter(y_test, predictions, marker='.')
+
 plt.xlabel('actual values')
 plt.ylabel('predicted values')
 plt.title('actual v/s predicted')

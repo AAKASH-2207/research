@@ -22,7 +22,7 @@ preprocessor = ColumnTransformer(transformers=[('cat',OneHotEncoder(),categorica
 model = Pipeline(steps = [('preprocessor',preprocessor),('model', LinearRegression())])
 
 
-x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state = 40)
+x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state = 32)
 
 model.fit(x_train,y_train)
 
