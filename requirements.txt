@@ -1,0 +1,6 @@
+qiskit
+matplotlib.pyplot
+numpy
+pylatexenc
+pdflatex
+torch 
