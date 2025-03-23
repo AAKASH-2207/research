@@ -31,20 +31,23 @@ x_train = scaler.fit_transform(x_train)
 x_test = scaler.fit_transform(x_test)
 
 
-model = tf.keras.Sequential([tf.keras.layers.Dense(128, activation = 'relu',kernel_regularizer=regularizers.l1(0.00456)),
+model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l1(0.00466)),
                              tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(128, activation = 'relu'),
+                       tf.keras.layers.Dense(1024, activation = 'relu'),
                        tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(128, activation = 'relu'),
+                       tf.keras.layers.Dense(512, activation = 'relu'),
                        tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(128, activation = 'relu'),
+                       tf.keras.layers.Dense(512, activation = 'relu'),
                        tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(128, activation = 'relu'),
+                       tf.keras.layers.Dense(512, activation = 'relu'),
                        tf.keras.layers.Dropout(0.04505),
                        tf.keras.layers.Dense(1)
 ])
+
 #0.000254
-opti = tf.keras.optimizers.Adam(learning_rate = 0.000254)
+learnrate = 0.00025443
+print(learnrate)
+opti = tf.keras.optimizers.Adam(learning_rate = learnrate)
 
 model.compile(optimizer = opti,loss = "mean_squared_error")
 
@@ -54,12 +57,12 @@ history = model.fit(x_train, y_train, validation_split = 0.2, epochs = es, batch
 
 model.save
 test_loss = model.evaluate(x_test, y_test)
-
+print(model.summary())
 min_loss = min(history.history['loss'])
 print(f"minimum loss = {min_loss}")
 test_accuracy = 100-test_loss
 print(f"test accuracy = {test_accuracy}%")
-
+print(f'learnrate = {learnrate}')
 print(f'test loss :{test_loss}')
 
 predictions = model.predict(x_test)
@@ -76,7 +79,7 @@ plt.title('actual v/s predicted')
 plt.plot([y.min(), y.max()], [y.min(), y.max()], 'k--', lw=2)
 plt.show()
 
-#plotting the loss over interartions
+#plotting the loss over iterartions
 plt.plot(history.history['loss'], label='train loss')
 plt.plot(history.history['val_loss'], label='validation loss')
 plt.xlabel('Epochs')

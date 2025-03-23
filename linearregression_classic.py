@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
@@ -19,7 +20,7 @@ categorical_features = ['District','Date']
 preprocessor = ColumnTransformer(transformers=[('cat',OneHotEncoder(),categorical_features)])
 
 
-model = Pipeline(steps = [('preprocessor',preprocessor),('model', LinearRegression())])
+model = Pipeline(steps = [('preprocessor',preprocessor),('model', RandomForestRegressor())])
 
 
 x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state = 32)
