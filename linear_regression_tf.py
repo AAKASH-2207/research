@@ -11,12 +11,14 @@ from sklearn.preprocessing import StandardScaler
 from keras.models import Sequential
 from keras import regularizers
 
-data = pd.read_csv("2024_complete_dataset.csv")
+
+data = pd.read_csv("2025_complete_dataset.csv")
 #d2 = pd.read_csv("Daily_data_of_Soil_Moisture_during_April_2024.csv")
 
 #data = pd.concat([d1,d2],axis = 0)
 
 data = data.dropna()
+
 print(len(data))
 x = data[['District','Date']]
 y = data['Avg_smlvl_at15cm']
@@ -32,16 +34,16 @@ x_test = scaler.fit_transform(x_test)
 
 
 model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l1(0.00466)),
-                             tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(1024, activation = 'relu'),
-                       tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(512, activation = 'relu'),
-                       tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(512, activation = 'relu'),
-                       tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(512, activation = 'relu'),
-                       tf.keras.layers.Dropout(0.04505),
-                       tf.keras.layers.Dense(1)
+                            tf.keras.layers.Dropout(0.04505),
+                            tf.keras.layers.Dense(1024, activation = 'relu'),
+                            tf.keras.layers.Dropout(0.04505),
+                            tf.keras.layers.Dense(512, activation = 'relu'),
+                            tf.keras.layers.Dropout(0.04505),
+                            tf.keras.layers.Dense(512, activation = 'relu'),
+                            tf.keras.layers.Dropout(0.04505),
+                            tf.keras.layers.Dense(512, activation = 'relu'),
+                            tf.keras.layers.Dropout(0.04505),
+                            tf.keras.layers.Dense(1)
 ])
 
 #0.000254
@@ -67,8 +69,8 @@ print(f'test loss :{test_loss}')
 
 predictions = model.predict(x_test)
 
-#model.save("satatalitte_data_soil_moisture.h5")
-#print("model saved")
+model.save("satatalitte_data_soil_moisture.h5")
+print("model saved")
 
 #plotting actual v/s predicted values
 plt.scatter(y_test, predictions, marker='.')
