@@ -12,11 +12,11 @@ from keras.models import Sequential
 from keras import regularizers
 
 
-data = pd.read_csv("2025_complete_dataset.csv")
+data = pd.read_csv("2024_complete_dataset.csv")
 #d2 = pd.read_csv("Daily_data_of_Soil_Moisture_during_April_2024.csv")
 
 #data = pd.concat([d1,d2],axis = 0)
-
+data.replace(to_replace = 0.0, value= np.nan,inplace=True)
 data = data.dropna()
 
 print(len(data))
@@ -26,14 +26,14 @@ y = data['Avg_smlvl_at15cm']
 for col in x.columns:
     x = pd.get_dummies(x, columns=[col], drop_first=True)
 
-x_train,x_test, y_train , y_test = train_test_split(x, y, test_size=0.2, random_state=32)
+x_train,x_test, y_train , y_test = train_test_split(x, y, test_size=0.2)
 
 scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.fit_transform(x_test)
 
 
-model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l1(0.00466)),
+model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l2(0.00466)),
                             tf.keras.layers.Dropout(0.04505),
                             tf.keras.layers.Dense(1024, activation = 'relu'),
                             tf.keras.layers.Dropout(0.04505),
@@ -69,7 +69,7 @@ print(f'test loss :{test_loss}')
 
 predictions = model.predict(x_test)
 
-model.save("satatalitte_data_soil_moisture.h5")
+model.save("satatalitte_data_soil_moisture.keras")
 print("model saved")
 
 #plotting actual v/s predicted values

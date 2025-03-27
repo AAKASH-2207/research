@@ -19,7 +19,11 @@ warnings.filterwarnings('ignore')
 pd.set_option('display.max_columns', None)
 
 data = pd.read_csv("2025_complete_dataset.csv")
+data = pd.read_csv("2024_complete_dataset.csv")
+#d2 = pd.read_csv("Daily_data_of_Soil_Moisture_during_April_2024.csv")
 
+#data = pd.concat([d1,d2],axis = 0)
+data.replace(to_replace = 0.0, value= np.nan,inplace=True)
 data = data.dropna()
 
 print(len(data))
