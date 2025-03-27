@@ -43,7 +43,7 @@ model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',ker
                             tf.keras.layers.Dropout(0.04505),
                             tf.keras.layers.Dense(512, activation = 'relu'),
                             tf.keras.layers.Dropout(0.04505),
-                            tf.keras.layers.Dense(1)
+                            tf.keras.layers.Dense(1, activation = 'sigmoid')
 ])
 
 #0.000254
