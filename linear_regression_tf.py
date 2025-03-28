@@ -26,7 +26,7 @@ y = data['Avg_smlvl_at15cm']
 for col in x.columns:
     x = pd.get_dummies(x, columns=[col], drop_first=True)
 
-x_train,x_test, y_train , y_test = train_test_split(x, y, test_size=0.2)
+x_train,x_test, y_train , y_test = train_test_split(x, y, test_size=0.2,random_state = 32)
 
 scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
@@ -43,13 +43,13 @@ model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',ker
                             tf.keras.layers.Dropout(0.04505),
                             tf.keras.layers.Dense(512, activation = 'relu'),
                             tf.keras.layers.Dropout(0.04505),
-                            tf.keras.layers.Dense(1, activation = 'sigmoid')
+                            tf.keras.layers.Dense(1, activation = 'relu')
 ])
 
 #0.000254
 learnrate = 0.00025443
 print(learnrate)
-opti = tf.keras.optimizers.Adam(learning_rate = learnrate)
+opti = tf.keras.optimizers.Adam(learning_rate = learnrate,)
 
 model.compile(optimizer = opti,loss = "mean_squared_error")
 

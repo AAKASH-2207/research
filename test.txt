@@ -64,3 +64,10 @@ test accuracy = 98.36184895038605%
 learnrate = 0.00025443
 test loss :1.6381510496139526
 1258/1258 ━━━━━━━━━━━━━━━━━━━━ 4s 3ms/step
+
+minimum loss = 0.697085440158844
+test accuracy = 98.19139015674591%
+learnrate = 0.00025443
+test loss :1.8086098432540894
+1258/1258 ━━━━━━━━━━━━━━━━━━━━ 4s 3ms/step   
+model saved
