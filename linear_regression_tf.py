@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from keras.models import Sequential
 from keras import regularizers
-
+import joblib
 
 data = pd.read_csv("2024_complete_dataset.csv")
 #d2 = pd.read_csv("Daily_data_of_Soil_Moisture_during_April_2024.csv")
@@ -26,15 +26,18 @@ y = data['Avg_smlvl_at15cm']
 for col in x.columns:
     x = pd.get_dummies(x, columns=[col], drop_first=True)
 
-x_train,x_test, y_train , y_test = train_test_split(x, y, test_size=0.2,random_state = 32)
+x_train,x_test, y_train , y_test = train_test_split(x, y, test_size=0.2)
 
 scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.fit_transform(x_test)
 
 
-model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l2(0.00466)),
-                            tf.keras.layers.Dropout(0.04505),
+# After fitting the scaler
+joblib.dump(scaler, "scaler.pkl")
+
+model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l2(0.006)),
+                            tf.keras.layers.Dropout(0.04),
                             tf.keras.layers.Dense(1024, activation = 'relu'),
                             tf.keras.layers.Dropout(0.04505),
                             tf.keras.layers.Dense(512, activation = 'relu'),
@@ -79,12 +82,14 @@ plt.xlabel('actual values')
 plt.ylabel('predicted values')
 plt.title('actual v/s predicted')
 plt.plot([y.min(), y.max()], [y.min(), y.max()], 'k--', lw=2)
+plt.plot([y.min(), y.max()],[y.min()+2, y.max()+2], 'k--', lw=1, color = "red")
+plt.plot([y.min(), y.max()],[y.min()-2, y.max()-2], 'k--', lw=1, color = "red")
 plt.show()
 
 #plotting the loss over iterartions
-plt.plot(history.history['loss'], label='train loss')
-plt.plot(history.history['val_loss'], label='validation loss')
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
-plt.legend()
-plt.show()
+#plt.plot(history.history['loss'], label='train loss')
+#plt.plot(history.history['val_loss'], label='validation loss')
+#plt.xlabel('Epochs')
+#plt.ylabel('Loss')
+#plt.legend()
+#plt.show()
