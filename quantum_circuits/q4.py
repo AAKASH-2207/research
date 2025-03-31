@@ -1,4 +1,5 @@
 from qiskit_aer import Aer
+<<<<<<< HEAD
 import numpy as np
 import torch
 import torch.nn
@@ -45,3 +46,9 @@ simulator = Aer.get_backend('aer_simulator')
 circuit = quantumcircuit(1, simulator, 100)
 print('expected values for rotation of pi {}'.format(circuit.run([np.pi])[0]))
 circuit._circuit.draw()
+=======
+from qiskit import QuantumCircuit, transpile
+import numpy as np
+import torch
+import torch.nn
+>>>>>>> 0f76dd91ec88b2213be3bf0f15932c1b3f08a1f2
