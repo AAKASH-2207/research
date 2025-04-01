@@ -2,9 +2,10 @@ import pennylane as qml
 import torch
 import torch.nn as nn
 import numpy as np
-
+from qiskit_aer import Aer
 # Define the quantum device
-dev = qml.device("qiskit.aer", wires=3)
+
+dev = qml.device(wires=3)
 
 # Define the quantum circuit
 @qml.qnode(dev)
@@ -52,7 +53,7 @@ class HybridQuantumCircuit(nn.Module):
         self.fc2 = nn.Linear(1, 1)  # Output layer should match the output of the quantum layer
 
     def forward(self, x):
-        x = torch.tanh(self.fc1(x))
+        x = torch.relu_(self.fc1(x))
         x = self.q_layer(x)  # Quantum layer output
         x = self.fc2(x)      # Final output layer
         return x

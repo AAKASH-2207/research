@@ -36,8 +36,8 @@ x_test = scaler.fit_transform(x_test)
 # After fitting the scaler
 joblib.dump(scaler, "scaler.pkl")
 
-model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l2(0.00466)),
-                            tf.keras.layers.Dropout(0.04),
+model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l1(0.00466)),
+                            tf.keras.layers.Dropout(0.04505),
                             tf.keras.layers.Dense(1024, activation = 'relu'),
                             tf.keras.layers.Dropout(0.04505),
                             tf.keras.layers.Dense(512, activation = 'relu'),
@@ -46,7 +46,7 @@ model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',ker
                             tf.keras.layers.Dropout(0.04505),
                             tf.keras.layers.Dense(512, activation = 'relu'),
                             tf.keras.layers.Dropout(0.04505),
-                            tf.keras.layers.Dense(1, activation = 'relu')
+                            tf.keras.layers.Dense(1)
 ])
 
 #0.000254
