@@ -36,7 +36,7 @@ x_test = scaler.fit_transform(x_test)
 # After fitting the scaler
 joblib.dump(scaler, "scaler.pkl")
 
-model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l2(0.006)),
+model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',kernel_regularizer=regularizers.l2(0.00466)),
                             tf.keras.layers.Dropout(0.04),
                             tf.keras.layers.Dense(1024, activation = 'relu'),
                             tf.keras.layers.Dropout(0.04505),
@@ -50,7 +50,7 @@ model = tf.keras.Sequential([tf.keras.layers.Dense(1024, activation = 'relu',ker
 ])
 
 #0.000254
-learnrate = 0.00025443
+learnrate = 0.00025446
 print(learnrate)
 opti = tf.keras.optimizers.Adam(learning_rate = learnrate,)
 

@@ -1,5 +1,4 @@
 from qiskit_aer import Aer
-<<<<<<< HEAD
 import numpy as np
 import torch
 import torch.nn
@@ -26,11 +25,13 @@ class quantumcircuit:
         
         self.backend = backend
         self.shots = shots
+        
     def run(self, thetas):
         t_qc = transpile(self._circuit,self.backend)
         qobj = assemble(t_qc,
                         shots = self.shots,
                         parameter_binds=[{self.theta:theta} for theta in thetas])
+        
         job = self.backend.run(qobj)
         result = job.result().get_counts()
         counts = np.array(list(result.values()))
@@ -46,9 +47,3 @@ simulator = Aer.get_backend('aer_simulator')
 circuit = quantumcircuit(1, simulator, 100)
 print('expected values for rotation of pi {}'.format(circuit.run([np.pi])[0]))
 circuit._circuit.draw()
-=======
-from qiskit import QuantumCircuit, transpile
-import numpy as np
-import torch
-import torch.nn
->>>>>>> 0f76dd91ec88b2213be3bf0f15932c1b3f08a1f2
